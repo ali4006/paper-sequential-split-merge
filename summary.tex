@@ -1,0 +1,32 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\title{Reproducibility of neuroimaging analyses across operating systems}
+
+\date{Summarised: 07/10/2017}
+\author{Tristan Glatard, Lindsay B.Lewis, Rafael Ferreira da Silva, Reza Adalat, \\
+Natacha Beck, Claude Lepage, Pierre Rioux , Marc-Etienne Rousseau, Tarek Sherif, Ewa Deelman, Najmeh Khalili-Mahani and Alan C.Evans}
+\begin{document}
+\maketitle
+\section{Justification}
+\begin{itemize}
+There are many analysis pipelines such as brain extraction, fMRI analysis, subcortical tissue classification, and cortical thickness extraction which are executed by some neuroimaging workflow engines such as FSL, Freesurfer, and CIVET. But mostly different results are produced on the same subject, due to differences in execution platforms of neuroimaging pipeline engines. Furthermore, the main reason for the creation of differences is identified by tracking library-call and system-call interception which is related to the application source code, compilation, static/dynamic libraries (e.g. glibc as library versions across OSes), and using various OS kernel and hardware. For example, reproducibility issue can be influenced by using mathematical libraries or different programming languages which rely on a specific compiler that has resulted in different computational results.
+ 
+\end{itemize}
+
+\section{Main Points}
+\begin{itemize}
+The main focus of the paper is quantifying the reproducibility of the execution results in some complex use-cases (e.g. cortical and subcortical classification) using determining the specific differences after running various tools builds based on the two proposed clusters, CentOS 5.10 on cluster A and Fedora 20 on cluster B. Three main packages including Freesurfer, FSL, and CIVET with different builds are installed on the clusters and performed with the CBRAIN platform.
+There are three comparison method to identify differences:  first checking the file checksums, then classification results were compared using the Dice similarity index, and the sum of binarized differences across subjects.
+In this paper three types of differences are considered, including inter-OS differences indicate the dynamically-linked applications, inter-build is for statically-linked applications, and inter-run differences is happened among the different execution on the same conditions (e.g.  due to the use of pseudo-random numbers or external dependencies like race conditions). In the following, the reproducibility of the cortical and subcortical tissue classification, RS-fMRI analysis, and cortical thickness extraction results are clarified in two various conditions. 
+
+\end{itemize}
+
+\section{Results}
+\begin{itemize}
+Cortical tissue classification with FSL produced a very high dice coefficients which indicate a slight differences at the interfaces between tissues. In addition, FSL subcortical tissue classification produced differences in small structures such as the amygdalae and the accumbens areas with a Dice coefficients ranging from 0.75 to 0.95. 
+The result of RF-fMRI in two clusters A and B have compared by analyzing the dice coefficient of different numbers of independent components and reveals significant differences. Moreover, differences of resampled cortical thickness files from both Freesurfer and CIVET in some brain regions disclose the effect of build and OS on their reproducibility.
+In conclude, although stabilization of the programs would improve reproducibility and reduce such differences, but it still would be affected by dynamic libraries across the operating systems. However, reproducibility issue could be addressed using an appropriate platform which provides a benchmark and analysis tools.
+
+\end{itemize}
+\end{document}
+
